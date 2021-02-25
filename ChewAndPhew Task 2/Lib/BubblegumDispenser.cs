@@ -39,7 +39,7 @@ namespace ChewAndPhew.Lib
         /// <summary>
         /// Used to add a bubble gum to dispenser
         /// </summary>
-        public void AddBubbleGum(Bubblegum bubblegum)
+        internal void AddBubbleGum(Bubblegum bubblegum)
         {
             if (Bubblegums.Count < MaxAmount)
             {
