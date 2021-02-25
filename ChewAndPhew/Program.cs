@@ -8,7 +8,7 @@ namespace ChewAndPhew
         static void Main(string[] args)
         {
             BubblegumDispenserFactory factory = new BubblegumDispenserFactory();
-            BubblegumDispenser dispenser = factory.CreateBubblegumDispenser();
+            BubblegumDispenser dispenser = factory.ProduceBubblegumDispenser();
             dispenser.BubblegumDispensetion += OnBubblegumDispensetion;
 
             for (int i = 0; i < 60; i++)

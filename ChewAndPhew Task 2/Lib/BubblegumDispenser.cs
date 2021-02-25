@@ -26,7 +26,7 @@ namespace ChewAndPhew.Lib
                 if (instance == null)
                 {
                     BubblegumDispenserFactory factory = new BubblegumDispenserFactory();
-                    instance = factory.CreateBubblegumDispenser();
+                    instance = factory.ProduceBubblegumDispenser();
                 }
                 return instance;
             }
@@ -39,11 +39,34 @@ namespace ChewAndPhew.Lib
         /// <summary>
         /// Used to add a bubble gum to dispenser
         /// </summary>
-        internal void AddBubbleGum(Bubblegum bubblegum)
+        /// <returns>True if bubblegum was added</returns>
+        public bool AddBubblegum(Bubblegum bubblegum)
         {
             if (Bubblegums.Count < MaxAmount)
             {
                 Bubblegums.Add(bubblegum);
+                return true;
+            }
+            return false;
+        }
+
+        /// <summary>
+        /// Used to add a bubbles gum to dispenser
+        /// </summary>
+        public void AddBubblegums(List<Bubblegum> bubblegums)
+        {
+            Bubblegum bubblegum = bubblegums.LastOrDefault();
+            while (bubblegum != null)
+            {
+                if (AddBubblegum(bubblegum))
+                {
+                    bubblegums.Remove(bubblegum);
+                }
+                else
+                {
+                    return;
+                }
+                bubblegum = bubblegums.LastOrDefault();
             }
         }
 

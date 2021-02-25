@@ -8,25 +8,65 @@ namespace ChewAndPhew.Lib
 
     public class BubblegumDispenser
     {
-        public BubblegumDispenser(int maxAmount)
+        internal BubblegumDispenser(int maxAmount)
         {
             MaxAmount = maxAmount;
             Bubblegums = new List<Bubblegum>();
         }
 
+        private static BubblegumDispenser instance = null;
+
+        /// <summary>
+        /// Singleton instance
+        /// </summary>
+        public static BubblegumDispenser Instance
+        {
+            get
+            {
+                if (instance == null)
+                {
+                    BubblegumDispenserFactory factory = new BubblegumDispenserFactory();
+                    instance = factory.ProduceBubblegumDispenser();
+                }
+                return instance;
+            }
+        }
         public List<Bubblegum> Bubblegums { get; private set; }
         public int MaxAmount { get; private set; }
-        public BubblegumDispensetion BubblegumDispensetion { get; set; };
+        public BubblegumDispensetion BubblegumDispensetion { get; set; }
 
 
         /// <summary>
         /// Used to add a bubble gum to dispenser
         /// </summary>
-        public void AddBubbleGum(Bubblegum bubblegum)
+        /// <returns>True if bubblegum was added</returns>
+        public bool AddBubblegum(Bubblegum bubblegum)
         {
             if (Bubblegums.Count < MaxAmount)
             {
                 Bubblegums.Add(bubblegum);
+                return true;
+            }
+            return false;
+        }
+
+        /// <summary>
+        /// Used to add a bubbles gum to dispenser
+        /// </summary>
+        public void AddBubblegums(List<Bubblegum> bubblegums)
+        {
+            Bubblegum bubblegum = bubblegums.LastOrDefault();
+            while (bubblegum != null)
+            {
+                if (AddBubblegum(bubblegum))
+                {
+                    bubblegums.Remove(bubblegum);
+                }
+                else
+                {
+                    return;
+                }
+                bubblegum = bubblegums.LastOrDefault();
             }
         }
 
@@ -42,7 +82,7 @@ namespace ChewAndPhew.Lib
         /// Used to dispense bubblegum
         /// </summary>
         public void Dispense()
-        { 
+        {
             Bubblegum bubblegum = Bubblegums.LastOrDefault();
             if (Bubblegums.Count > 0)
             {
